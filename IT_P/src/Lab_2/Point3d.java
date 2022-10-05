@@ -1,16 +1,20 @@
 package Lab_2;
 
-public class Point2d {
+import java.util.zip.ZipEntry;
+
+public class Point3d {
 
     private double xCoord;
     private double yCoord;
+    private double zCoord;
 
-    public Point2d(double x, double y){
+    public Point3d(double x, double y, double z){
         xCoord = x;
         yCoord = y;
+        zCoord = z;
     }
-    public Point2d(){
-        this(0, 0);
+    public Point3d(){
+        this(0, 0, 0);
     }
     public double getX(){
         return xCoord;
@@ -19,11 +23,18 @@ public class Point2d {
     public double getY(){
         return yCoord;
     }
+
+    public double getZ(){
+        return zCoord;
+    }
     public void setX(double value){
         xCoord = value;
     }
     public void setY(double value){
         yCoord = value;
+    }
+    public void setZ(double value){
+        zCoord = value;
     }
 
 }
