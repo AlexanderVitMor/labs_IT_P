@@ -1,3 +1,5 @@
+package Lab_1;
+
 // Создание класса
 public class Primes {
     public static void main(String[] args) {

@@ -1,11 +1,13 @@
+package Lab_1;
+
 public class Palindrome {
     public static void main(String[] args){
         for (int i = 0; i < args.length; i++){
             String word = args[i];
             if(isPalindrome(word))
-                System.out.println(i + " - Palindrome");
+                System.out.println(i + " - Lab_1.Palindrome");
             else
-                System.out.println(i + " - Not Palindrome" + " ");
+                System.out.println(i + " - Not Lab_1.Palindrome" + " ");
         }
     }
     public static String reverseString(String word){
