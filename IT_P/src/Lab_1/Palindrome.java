@@ -14,9 +14,9 @@ public class Palindrome {
 
     // Проверка условия и вывод работы программы
             if(isPalindrome(word))
-                System.out.println(i + " - Lab_1.Palindrome");
+                System.out.println(i + " - Palindrome");
             else
-                System.out.println(i + " - Not Lab_1.Palindrome" + " ");
+                System.out.println(i + " - Not Palindrome" + " ");
         }
     }
 
