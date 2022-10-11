@@ -1,40 +1,27 @@
 package Lab_2;
 
-import java.util.zip.ZipEntry;
-
-public class Point3d {
-
-    private double xCoord;
-    private double yCoord;
+public class Point3d extends Point2d{
     private double zCoord;
-
     public Point3d(double x, double y, double z){
-        xCoord = x;
-        yCoord = y;
-        zCoord = z;
+        setX(x);
+        setY(y);
+        setZ(z);
     }
+
     public Point3d(){
         this(0, 0, 0);
     }
-    public double getX(){
-        return xCoord;
-    }
 
-    public double getY(){
-        return yCoord;
-    }
-
-    public double getZ(){
+    public double getZ() {
         return zCoord;
     }
-    public void setX(double value){
-        xCoord = value;
+
+    public void setZ(double zCoord) {
+        this.zCoord = zCoord;
     }
-    public void setY(double value){
-        yCoord = value;
-    }
-    public void setZ(double value){
-        zCoord = value;
+
+    public double[] getXYZ(){
+        return new double[]{getX(), getY(), getZ()};
     }
 
 }
