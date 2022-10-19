@@ -19,10 +19,17 @@ public class Lab1 {
         // cd - Closed - замкнутый массив эмитация кольца
         Point3d[] arrayPointsCd = {firstPoint, secondPoint, thirdPoint, firstPoint};
 
-        /*if (secondPoint.equals(firstPoint)) System.out.println("Данный треугольник не существует");
-        else System.out.println("Площадь треугольника равна: ");*/
+        if (Point3d.equalityCheck(arrayPointsCd) && equalityCheckMax(arrayPointsCd)) System.out.println("Данный треугольник не существует");
+        else System.out.println("Площадь треугольника равна: " + computerArea(arrayPointsCd));
 
     }
+
+    /**
+     * ываываыва
+     * @param firstPoint ргриигрти
+     * @param secondPoint вапвапвап
+     * @return вапвапв
+     */
     public static double distanceTo(Point3d firstPoint, Point3d secondPoint)
     {
 
@@ -55,10 +62,23 @@ public class Lab1 {
         return triangleArea;
     }
 
-   /* public static boolean equalityCheck(Point3d[] arrayPointsCd){
-        for (int i = 0; i < 3; i++) {
-            if (arrayPointsCd[1].equals(arrayPointsCd[3])) return true;
-        }
-        return false;
-    }*/
+   public static boolean equalityCheckMax(Point3d[] arrayPointsCd){
+       double[][] arrayDistance = new double[2][3];
+       int maxId = arrayDistance[0].length - 1;
+       for (int i = 0; i < 2; i++) {
+           for (int j = 0; j < 3; j++) {
+               if (i == 0) arrayDistance[i][j] = distanceTo(arrayPointsCd[j], arrayPointsCd[j + 1]);
+               else {
+                   if (j < 1) arrayDistance[1][2] = arrayDistance[0][j] + arrayDistance[0][j + 1];
+                   else if (j < maxId) arrayDistance[1][0] = arrayDistance[0][j] + arrayDistance[0][j + 1];
+                   else arrayDistance[1][1] = arrayDistance[0][j] + arrayDistance[0][0];
+               }
+           }
+       }
+
+       for (int i = 0; i < 3; i++) {
+           if (arrayDistance[0][i] >= arrayDistance[1][i]) return true;
+       }
+       return false;
+    }
 }

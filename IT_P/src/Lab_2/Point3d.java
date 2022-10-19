@@ -1,5 +1,7 @@
 package Lab_2;
 
+import java.util.Objects;
+
 public class Point3d extends Point2d{
     private double zCoord;
     public Point3d(double x, double y, double z){
@@ -24,4 +26,23 @@ public class Point3d extends Point2d{
         return new double[]{getX(), getY(), getZ()};
     }
 
+    public static boolean equalityCheck(Point3d[] arrayPointsCd){
+        for (int i = 0; i < 3; i++) {
+            if (arrayPointsCd[i].equals(arrayPointsCd[i + 1])) return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point3d point3d = (Point3d) o;
+        return Double.compare(point3d.zCoord, zCoord) == 0 && super.equals(point3d);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(zCoord);
+    }
 }
