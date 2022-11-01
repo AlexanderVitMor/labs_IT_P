@@ -102,7 +102,10 @@ public class AStarState
      **/
     public void closeWaypoint(Location loc)
     {
-        // TODO:  Implement.
+        Waypoint removeWaypoint = openWaypoints.get(loc);
+        openWaypoints.remove(loc);
+        closedWaypoints.put(loc, removeWaypoint);
+
     }
 
     /**
@@ -111,8 +114,7 @@ public class AStarState
      **/
     public boolean isLocationClosed(Location loc)
     {
-        // TODO:  Implement.
-        return false;
+        return (closedWaypoints.containsKey(loc));
     }
 }
 
