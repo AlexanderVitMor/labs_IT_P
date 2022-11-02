@@ -11,6 +11,10 @@ public class Task_2 {
         System.out.println(getDecimalPlaces("43.20"));
         System.out.println(Fibonacci(12));
         System.out.println(isValid("59001"));
+        System.out.println(isStrangePair("", ""));
+        System.out.println(isPrefix("retrospect", "ret-"));
+        System.out.println(isSuffix("arachnophobia", "-phodfgdfgdbia"));
+        System.out.println(boxSeq(6));
 
     }
     public static String repeat(String str, int value){
@@ -82,4 +86,36 @@ public class Task_2 {
         }
         return false;
     }
+
+    public static boolean isStrangePair(String firstWord, String secondWord){
+        return (firstWord.length() == 0  && secondWord.length() == 0) || (firstWord.charAt(0) == secondWord.charAt(secondWord.length() - 1) &&
+               firstWord.charAt(firstWord.length() - 1) == secondWord.charAt(0));
+    }
+
+    public static boolean isPrefix(String word, String _prefix){
+        StringBuilder prefix = new StringBuilder(_prefix);
+        prefix.deleteCharAt(_prefix.length() - 1);
+        String Prefix = prefix.toString();
+        return word.startsWith(Prefix);
+    }
+
+
+    public static boolean isSuffix(String word, String _suffix){
+        StringBuilder suffix = new StringBuilder(_suffix);
+        suffix.deleteCharAt(0);
+        String Suffix = suffix.toString();
+        return word.endsWith(Suffix);
+    }
+
+    public static int boxSeq(int value){
+        int sum = 0;
+        for (int i = 1; i < value + 1; i++) {
+            if (i % 2 != 0) sum += 3;
+            else sum -= 1;
+        }
+        return sum;
+    }
+
+
+
 }
