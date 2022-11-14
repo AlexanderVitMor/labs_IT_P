@@ -18,14 +18,17 @@ public class Mandelbrot extends FractalGenerator{
         double zComprehensive = 0;
         int iteration = 0;
         for (; iteration < MAX_ITERATIONS; iteration++) {
-            double comparisonModule = Math.abs(zReal*zReal + zComprehensive*zComprehensive);
-            if (comparisonModule * comparisonModule > 4) {
-                zReal = zReal*zReal - zComprehensive*zComprehensive + x;
+
+            double comparisonModule = Math.sqrt(zReal*zReal + zComprehensive*zComprehensive);
+
+            if (comparisonModule * comparisonModule < 4) {
+                double checkReal = zReal*zReal - zComprehensive*zComprehensive + x;
                 zComprehensive = 2 * zReal*zComprehensive + y;
+                zReal = checkReal;
             }
             else break;
         }
-        if (iteration + 1 == MAX_ITERATIONS) return -1;
+        if (iteration == MAX_ITERATIONS) return -1;
         else return iteration;
 
     }
