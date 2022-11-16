@@ -1,0 +1,149 @@
+package Tasks;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+
+public class Task_4 {
+
+    public static void main(String[] args) {
+        essayWriting(10, 7, "hello my name is Bessie and this is my essay");
+        System.out.println(Split("((())())(()(()()))"));
+        System.out.println(toCamelCase("is_modal_open"));
+        System.out.println(toSnakeCase("getColor"));
+        System.out.println(overTime(new Double[]{9d, 17d, 30d, 1.8}));
+        System.out.println(BMI("205 pounds", "73 inches"));
+        System.out.println(bugger(39));
+       // System.out.println(toStarShorthand("avcc"));
+    }
+
+    public static void essayWriting(int N, int K, String message) {
+        String[] words = message.split(" ");
+        StringBuilder string = new StringBuilder();
+        System.out.println(Arrays.toString(words));
+        int counter = 0;
+        for (String word : words) {
+            if (word.length() + counter <= K) {
+                counter += word.length();
+                string.append(word).append(" ");
+            } else {
+                System.out.println(string);
+                counter = 0;
+                string = new StringBuilder();
+                string.append(word).append(" ");
+                counter += word.length();
+            }
+
+        }
+        System.out.println(string);
+    }
+
+    public static List<String> Split(String s) {
+        List<String> array = new ArrayList<>();
+        int left = 0;
+        int right = 0;
+        StringBuilder part = new StringBuilder("");
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                left++;
+                part.append(s.charAt(i));
+            } else if (s.charAt(i) == ')') {
+                right++;
+                part.append(s.charAt(i));
+            }
+            if (right == left) {
+                array.add(String.valueOf(part));
+                part = new StringBuilder("");
+                left = 0;
+                right = 0;
+            }
+        }
+        return array;
+    }
+
+    public static String toCamelCase(String message) {
+        String[] Words = message.split("_");
+        StringBuilder stringCamel = new StringBuilder(Words[0]);
+        for (int i = 1; i < Words.length; i++) {
+            stringCamel.append(Words[i].substring(0, 1).toUpperCase()).append(Words[i].substring(1));
+        }
+        return stringCamel.toString();
+    }
+
+    public static String toSnakeCase(String message) {
+        char[] Words = message.toCharArray();
+        StringBuilder stringSnake = new StringBuilder();
+        for (char word : Words) {
+            String c = String.valueOf(word);
+            if (c == c.toUpperCase()) {
+                stringSnake.append("_");
+                stringSnake.append(c.toLowerCase());
+            } else stringSnake.append(c);
+
+        }
+        return stringSnake.toString();
+    }
+
+    public static String overTime(Double[] array) {
+        double cost = 0;
+        for (Double i = array[0]; i < array[1]; i++) {
+            if (i < 17) cost += array[2];
+            else cost += array[2] * array[3];
+
+        }
+        return "$" + cost;
+    }
+
+    public static String BMI(String weight, String height) {
+        String[] Weight = weight.split(" ");
+        Double WEIGHT = Double.valueOf(Weight[0]);
+
+        String[] Height = height.split(" ");
+        Double HEIGHT = Double.valueOf(Height[0]);
+
+        if (Weight[1].equals("pounds")) WEIGHT = WEIGHT * 0.45;
+        if (Height[1].equals("inches")) HEIGHT = HEIGHT * 0.025;
+
+        Double bmi = WEIGHT / (HEIGHT * HEIGHT);
+        //Double bmi = (WEIGHT * 0.45) / ((HEIGHT * 0.025)*(HEIGHT * 0.025));
+
+        if (bmi < 18.5) return String.format("%.1f", bmi) + " Underweight";
+        else if (bmi >= 18.5 && bmi < 25) return String.format("%.1f", bmi) + " Normal weight";
+        else return String.format("%.1f", bmi) + " Overweight";
+    }
+
+    public static int bugger(int number) {
+        int newNumber = 1;
+        int counter = 0;
+        String Number = String.valueOf(number);
+        while (Number.length() > 1) {
+            for (int i = 0; i < Number.length(); i++) {
+                newNumber *= Integer.parseInt(String.valueOf(Number.charAt(i)));
+            }
+            Number = String.valueOf(newNumber);
+            newNumber = 1;
+            counter++;
+        }
+        return counter;
+    }
+
+//    public static String toStarShorthand(String message) {
+//        int index = 0;
+//        for (int i = 0; i < message.length(); i++) {
+//            if (message.charAt(i) == '0' && message.indexOf('0', i + 1) == i + 1) {
+//                index++;
+//            }
+//            else if (i != 0 && message.charAt(i) == message.charAt(i - 1)) {
+//                index++;
+//                if (index > maxIndex) maxIndex = index;
+//                index = 0;
+//            }
+//        }
+
+//        return String.valueOf(index);
+
+
+}
