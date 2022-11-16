@@ -1,5 +1,6 @@
 package Tasks;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Task_3 {
@@ -11,6 +12,9 @@ public class Task_3 {
         System.out.println(isValidHexCode("#CD5C5C"));
         System.out.println(same(new Integer[]{1, 3, 4, 4, 4}, new Integer[]{2, 5, 7}));
         System.out.println(isKaprekar(10));
+        System.out.println(longestZero("1111101100"));
+        System.out.println(nextPrime(90));
+        System.out.println(rightTriangle(70,130,110));
 
     }
 
@@ -83,9 +87,35 @@ public class Task_3 {
         first = Number.substring(0, numberLength / 2);
         second = Number.substring(numberLength / 2);
 
-        return Integer.parseInt(first) +  Integer.parseInt(second)== number;
+        return Integer.parseInt(first) + Integer.parseInt(second) == number;
 
+    }
 
+    public static String longestZero(String binary) {
+        int maxIndex = 0, index = 0;
+        for (int i = 0; i < binary.length(); i++) {
+            if (binary.charAt(i) == '0' && binary.indexOf('0', i + 1) == i + 1) {
+                index++;
+            } else if (binary.charAt(i) == '0') {
+                index++;
+                if (index > maxIndex) maxIndex = index;
+                index = 0;
+            }
+        }
+        return "0".repeat(maxIndex);
+    }
+
+    public static int nextPrime(int number) {
+        BigInteger Number = BigInteger.valueOf(number);
+        while (!Number.isProbablePrime(100)) {
+            number++;
+            Number = BigInteger.valueOf(number);
+        }
+        return Number.intValue();
+    }
+
+    public static boolean rightTriangle(int a, int b, int c) {
+        return a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a;
     }
 
 

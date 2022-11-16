@@ -2,9 +2,17 @@ package Lab_46;
 
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Класс описывающий фрактал Манделброт.
+ */
 public class Mandelbrot extends FractalGenerator {
-    public static final int MAX_ITERATIONS = 2000;
+    public static final int MAX_ITERATIONS = 2_000;
 
+    /**
+     * Метод изменяет поля прямоугольника для отображения правильного начального диапазона для фрактала.
+     *
+     * @param range прямоугольный объект.
+     */
     @Override
     public void getInitialRange(Rectangle2D.Double range) {
         range.x = -2.5;
@@ -13,6 +21,16 @@ public class Mandelbrot extends FractalGenerator {
         range.height = 3;
     }
 
+    /**
+     * Метод принимает на вход две константы для комплексной плоскости и вычисляет количество итераций,
+     * проходящей для прорисовки этого пикселя. Количество итераций ограничено в нашем случае (2000).
+     * Так же подсчет итераций происходит до тех пор пока |Z| < 2 в противном случае точка не принадлежит множеству Манделброта.
+     * Функцмя Манделброта Z(n) = Z(n-1)^2 + С, |Z| < 2, Z(0) = 0.
+     *
+     * @param x Константы действительной части.
+     * @param y Константы мнимой части.
+     * @return количество итераций для данной точки, иначе -1 если количество = 2000.
+     */
     @Override
     public int numIterations(double x, double y) {
         double zReal = 0;
