@@ -16,7 +16,8 @@ public class Task_4 {
         System.out.println(overTime(new Double[]{9d, 17d, 30d, 1.8}));
         System.out.println(BMI("205 pounds", "73 inches"));
         System.out.println(bugger(39));
-       // System.out.println(toStarShorthand("avcc"));
+        System.out.println(toStarShorthand(""));
+        System.out.println(doesRhyme("and frequently do?", "you gotta move."));
     }
 
     public static void essayWriting(int N, int K, String message) {
@@ -130,20 +131,55 @@ public class Task_4 {
         return counter;
     }
 
-//    public static String toStarShorthand(String message) {
-//        int index = 0;
-//        for (int i = 0; i < message.length(); i++) {
-//            if (message.charAt(i) == '0' && message.indexOf('0', i + 1) == i + 1) {
-//                index++;
-//            }
-//            else if (i != 0 && message.charAt(i) == message.charAt(i - 1)) {
-//                index++;
-//                if (index > maxIndex) maxIndex = index;
-//                index = 0;
-//            }
-//        }
+    public static String toStarShorthand(String message) {
+        int index = 0;
+        StringBuilder newMessage = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            String thisChar = String.valueOf(message.charAt(i));
+            if (message.indexOf(message.charAt(i), i + 1) == i + 1) {
+                index++;
+            } else if (index == 0) {
+                newMessage.append(thisChar.repeat(1));
+            } else if (message.charAt(i) == message.charAt(i - 1)) {
+                newMessage.append(thisChar).append("*").append(index + 1);
+                index = 0;
+            }
+        }
+        return newMessage.toString();
+    }
 
-//        return String.valueOf(index);
+    public static boolean doesRhyme(String firstMessage, String secondMessage) {
+        firstMessage = firstMessage.toLowerCase();
+        secondMessage = secondMessage.toLowerCase();
+        String[] firstString = firstMessage.split(" ");
+        String firstEnd = firstString[firstString.length - 1];
+
+        String[] secondString = secondMessage.split(" ");
+        String secondEnd = secondString[secondString.length - 1];
+
+        int maxLen = Math.max(firstEnd.length(), secondEnd.length());
+        String maxEnd, minEnd;
+
+        if (firstEnd.length() == maxLen) {
+            maxEnd = firstEnd;
+            minEnd = secondEnd;
+        } else {
+            maxEnd = secondEnd;
+            minEnd = firstEnd;
+        }
+
+        String ISAlphabetic = "aeyuio";
+
+        for (int i = 0; i < maxLen; i++) {
+            if (ISAlphabetic.contains(String.valueOf(maxEnd.charAt(i)))){
+                if (!minEnd.contains(String.valueOf(maxEnd.charAt(i)))){
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
 
 
 }
