@@ -1,5 +1,7 @@
 package Tasks;
 
+
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +20,8 @@ public class Task_4 {
         System.out.println(bugger(39));
         System.out.println(toStarShorthand(""));
         System.out.println(doesRhyme("and frequently do?", "you gotta move."));
+        System.out.println(trouble("666789", "12345667"));
+        countUniqueBooks("AZYWABBCATTTA", 'A');
     }
 
     public static void essayWriting(int N, int K, String message) {
@@ -171,14 +175,50 @@ public class Task_4 {
         String ISAlphabetic = "aeyuio";
 
         for (int i = 0; i < maxLen; i++) {
-            if (ISAlphabetic.contains(String.valueOf(maxEnd.charAt(i)))){
-                if (!minEnd.contains(String.valueOf(maxEnd.charAt(i)))){
+            if (ISAlphabetic.contains(String.valueOf(maxEnd.charAt(i)))) {
+                if (!minEnd.contains(String.valueOf(maxEnd.charAt(i)))) {
                     return false;
                 }
             }
         }
         return true;
 
+    }
+
+    public static boolean trouble(String firstNumber, String secondNumber) {
+        char[] charFirstNum = firstNumber.toCharArray();
+        char[] charSecondNum = secondNumber.toCharArray();
+        char[] ISNumbers = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        int firstCounter = 0, secondCounter = 0;
+        for (char c : ISNumbers) {
+            for (char s : charFirstNum) {
+                if (c == s && firstCounter < 3) {
+                    firstCounter++;
+                } else if (firstCounter > 3) return false;
+            }
+            for (char s : charSecondNum) {
+                if (c == s && secondCounter < 2) {
+                    secondCounter++;
+                } else if (secondCounter > 3) return false;
+            }
+            if (firstCounter == 3 && secondCounter == 2) return true;
+            else {
+                firstCounter = 0;
+                secondCounter = 0;
+            }
+        }
+        return false;
+    }
+
+    public static void countUniqueBooks(String message, char point) {
+        HashSet<Character> setMessage = new HashSet<>();
+        int index = 0;
+        for (int i = 0; i < message.length(); i++) {
+            if (message.charAt(i) != point && index % 2 == 1) {
+                setMessage.add(message.charAt(i));
+            } else if (message.charAt(i) == point) index++;
+        }
+        System.out.println(setMessage.size());
     }
 
 
