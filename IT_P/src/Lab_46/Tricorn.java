@@ -2,10 +2,7 @@ package Lab_46;
 
 import java.awt.geom.Rectangle2D;
 
-/**
- * Класс описывающий фрактал Манделброт.
- */
-public class Mandelbrot extends FractalGenerator {
+public class Tricorn extends FractalGenerator {
     public static final int MAX_ITERATIONS = 2_000;
 
     /**
@@ -13,12 +10,13 @@ public class Mandelbrot extends FractalGenerator {
      *
      * @param range прямоугольный объект.
      */
+
     @Override
     public void getInitialRange(Rectangle2D.Double range) {
-        range.x = -2.5;
-        range.y = -1.5;
-        range.width = 3;
-        range.height = 3;
+        range.x = -2;
+        range.y = -2;
+        range.width = 4;
+        range.height = 4;
     }
 
     /**
@@ -42,17 +40,16 @@ public class Mandelbrot extends FractalGenerator {
 
             if (comparisonModule * comparisonModule < 4) {
                 double checkReal = zReal * zReal - zComprehensive * zComprehensive + x;
-                zComprehensive = 2 * zReal * zComprehensive + y;
+                zComprehensive = -2 * zReal * zComprehensive + y;
                 zReal = checkReal;
             } else break;
         }
         if (iteration == MAX_ITERATIONS) return -1;
         else return iteration;
-
     }
 
     @Override
     public String toString() {
-        return "Mandelbrot";
+        return "Tricorn";
     }
 }

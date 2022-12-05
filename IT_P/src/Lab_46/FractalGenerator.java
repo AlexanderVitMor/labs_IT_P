@@ -37,7 +37,8 @@ public abstract class FractalGenerator {
      * Sets the specified rectangle to contain the initial range suitable for
      * the fractal being generated.
      */
-    public abstract void getInitialRange(Rectangle2D.Double range);
+    public void getInitialRange(Rectangle2D.Double range) {
+    }
 
 
     /**
