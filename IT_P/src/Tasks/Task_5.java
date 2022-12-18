@@ -1,8 +1,6 @@
 package Tasks;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,6 +12,7 @@ public class Task_5 {
         System.out.println(canComplete("bbutl", "beautiful"));
         System.out.println(sumDigProd(1, 2, 3, 4, 5, 6)); //4
         System.out.println(Arrays.toString(new List[]{sameVowelGroup(new String[]{"hoops", "chuff", "bot", "bottom"})})); //5
+        System.out.println(Arrays.toString(SameVowelGroup(new String[]{"toe", "ocelot", "maniac"})));
         System.out.println(validateCard("1234567890123452")); //6
         System.out.println(numToEng(909)); //7
         System.out.println(getSha256Hash("password123")); //8
@@ -112,6 +111,32 @@ public class Task_5 {
             if (flag) listWords.add(word);
         }
         return listWords;
+    }
+
+    public static String[] SameVowelGroup(String[] a) {
+        Set<Character> vowels = new HashSet<Character>(Arrays.asList(
+                'A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'Y', 'y'));
+        String first_word = a[0];
+        HashSet<Character> a1 = new HashSet<>();
+        ArrayList<Character> a2 = new ArrayList<>();
+        ArrayList<String> word_vowels = new ArrayList<>();
+
+        for(int i = 0; i < first_word.length(); i++){
+            if(vowels.contains(first_word.charAt(i)))
+                a1.add(first_word.charAt(i));
+        }
+        word_vowels.add(a[0]);
+
+        for (int i = 1; i < a.length; i++) {
+            for(int j = 0; j < a[i].length();j++){
+                if(a1.contains(a[i].charAt(j)))
+                    a2.add(a[i].charAt(j));
+            }
+            if(a2.containsAll(a1))
+                word_vowels.add(a[i]);
+            a2 = new ArrayList<>();
+        }
+        return word_vowels.toArray(new String[]{});
     }
 
     public static boolean validateCard(String numCard) {
