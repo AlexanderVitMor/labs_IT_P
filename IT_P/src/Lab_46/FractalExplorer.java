@@ -119,7 +119,7 @@ public class FractalExplorer {
     /**
      * Класс для реализации действий после нажатия на определенный участок курсором мышки.
      */
-    public class MouseAction extends MouseAdapter implements MouseListener {
+    public class MouseAction extends MouseAdapter{
         /**
          * Для этого переопределяем нужный нам метод, и пишем последовательность действий,
          * которые произойдут после нажатия на мышь.
@@ -248,7 +248,7 @@ public class FractalExplorer {
     }
 
     public static void main(String[] args) {
-        FractalExplorer fractal = new FractalExplorer(1_200);
+        FractalExplorer fractal = new FractalExplorer(800);
         fractal.createAndShowGUI();
         fractal.drawFractal();
 

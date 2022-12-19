@@ -15,19 +15,18 @@ public class Task_4 {
         System.out.println(Split("((())())(()(()()))"));
         System.out.println(toCamelCase("is_modal_open"));
         System.out.println(toSnakeCase("getColor"));
-        System.out.println(overTime(new Double[]{9d, 17d, 30d, 1.8}));
+        System.out.println(overTime(new double[]{9d, 17d, 30d, 1.5}));
         System.out.println(BMI("205 pounds", "73 inches"));
         System.out.println(bugger(39));
-        System.out.println(toStarShorthand(""));
+        System.out.println(toStarShorthand("77777geff"));
         System.out.println(doesRhyme("and frequently do?", "you gotta move."));
         System.out.println(trouble("666789", "12345667"));
-        countUniqueBooks("AZYWABBCATTTA", 'A');
+        System.out.println(countUniqueBooks("AZYWABBCATTTA", 'A'));
     }
 
     public static void essayWriting(int N, int K, String message) {
         String[] words = message.split(" ");
         StringBuilder string = new StringBuilder();
-        System.out.println(Arrays.toString(words));
         int counter = 0;
         for (String word : words) {
             if (word.length() + counter <= K) {
@@ -49,7 +48,7 @@ public class Task_4 {
         List<String> array = new ArrayList<>();
         int left = 0;
         int right = 0;
-        StringBuilder part = new StringBuilder("");
+        StringBuilder part = new StringBuilder();
 
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '(') {
@@ -61,7 +60,7 @@ public class Task_4 {
             }
             if (right == left) {
                 array.add(String.valueOf(part));
-                part = new StringBuilder("");
+                part = new StringBuilder();
                 left = 0;
                 right = 0;
             }
@@ -83,7 +82,7 @@ public class Task_4 {
         StringBuilder stringSnake = new StringBuilder();
         for (char word : Words) {
             String c = String.valueOf(word);
-            if (c == c.toUpperCase()) {
+            if (c.equals(c.toUpperCase())) {
                 stringSnake.append("_");
                 stringSnake.append(c.toLowerCase());
             } else stringSnake.append(c);
@@ -92,14 +91,26 @@ public class Task_4 {
         return stringSnake.toString();
     }
 
-    public static String overTime(Double[] array) {
+    public static String overTime(double[] array) {
         double cost = 0;
-        for (Double i = array[0]; i < array[1]; i++) {
-            if (i < 17) cost += array[2];
-            else cost += array[2] * array[3];
-
+        if (array[1] > array[0]) {
+            if (array[1] <= 17 && array[0] >= 9)
+                cost = (array[1] - array[0]) * array[2];
+            else if (array[1] > 17 && array[0] < 17)
+                cost = ((17 - array[0]) * array[2]) + ((array[1] - 17) * array[2] * array[3]);
+            else if (array[0] >= 17 && array[1] <= 24)
+                cost = (array[1] - array[0]) * array[2] * array[3];
+        } else if (array[1] < array[0]) {
+            if (array[0] >= 17 && array[1] <= 9)
+                cost = (24 - array[0]) * array[2] * array[3] + array[1] * array[2] * array[3];
+            else if (array[0] >= 17) // array[1]>=9
+                cost = (24 - array[0]) * array[2] * array[3] + 9 * array[2] * array[3] + (array[1] - 9) * array[2];
+            else if (array[1] <= 9) //array[0] < 17
+                cost = (17 - array[0]) * array[2] + ((24 - 17) * array[2] * array[3]) + array[1] * array[2] * array[3];
+            else cost = (17 - array[0]) * array[2] + ((24 - 17) * array[2] * array[3]) + 9 * array[2] * array[3] + (array[1] - 9) * array[2];
         }
-        return "$" + cost;
+        String result = String.format("%.2f", cost);
+        return "$" + result;
     }
 
     public static String BMI(String weight, String height) {
@@ -143,7 +154,7 @@ public class Task_4 {
             if (message.indexOf(message.charAt(i), i + 1) == i + 1) {
                 index++;
             } else if (index == 0) {
-                newMessage.append(thisChar.repeat(1));
+                newMessage.append(thisChar);
             } else if (message.charAt(i) == message.charAt(i - 1)) {
                 newMessage.append(thisChar).append("*").append(index + 1);
                 index = 0;
@@ -210,7 +221,7 @@ public class Task_4 {
         return false;
     }
 
-    public static void countUniqueBooks(String message, char point) {
+    public static int countUniqueBooks(String message, char point) {
         HashSet<Character> setMessage = new HashSet<>();
         int index = 0;
         for (int i = 0; i < message.length(); i++) {
@@ -218,7 +229,7 @@ public class Task_4 {
                 setMessage.add(message.charAt(i));
             } else if (message.charAt(i) == point) index++;
         }
-        System.out.println(setMessage.size());
+        return setMessage.size();
     }
 
 

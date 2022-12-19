@@ -32,7 +32,7 @@ public class Crawler {
         URLDepthPair urlPair = new URLDepthPair(startURL, 0);
         toVisit.add(urlPair);
         int depth;
-        HashSet<String> seenURLs = new HashSet<String>();
+        HashSet<String> seenURLs = new HashSet<>();
         seenURLs.add(startURL);
 
         // Continue until all pages within maxDepth links of the source
