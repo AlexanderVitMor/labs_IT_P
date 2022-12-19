@@ -1,100 +1,84 @@
 package Lab_78;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
 
-/**
- * A URL pool class to store a list of URLs to be searched with depth.
- * Stored as a URLDepthPair instance.
- */
 public class URLPool {
+    // Список ожидающих обхода URL-адресов
+    LinkedList<URLDepthPair> urlsWaitingCheck;
+    // Список всех URL-адресов, которые мы видели
+    LinkedList<URLDepthPair> urlsSeen;
+    // Максимальная глубина обхода
+    int maxDepth;
+    // Количество ожидающих потоков
+    int waitCountThread;
+    // Набор всех просмотренных URL-адресов
+    HashSet<String> urlsSeenSet;
 
-    /** A linked list to represent pending URLs. */
-    private LinkedList<URLDepthPair> pendingURLs;
-
-    /** A linked list to represent processed URLs. */
-    public LinkedList<URLDepthPair> processedURLs;
-
-    /** An array list to represent URLs that have been seen. */
-    private ArrayList<String> seenURLs = new ArrayList<String>();
-
-    /** An int to keep track of number of threads waiting. */
-    public int waitingThreads;
-
-    /** Constructer to initialize waiting threads, processed URLs, and pending
-     * URLs.
-     */
-    public URLPool() {
-        waitingThreads = 0;
-        pendingURLs = new LinkedList<URLDepthPair>();
-        processedURLs = new LinkedList<URLDepthPair>();
-    }
-
-    /** Synchronized method to get the number of waiting threads. */
-    public synchronized int getWaitThreads() {
-        return waitingThreads;
-    }
-
-    /** Synchronized method to return the size of the pool. */
-    public synchronized int size() {
-        return pendingURLs.size();
-    }
-
-    /** Synchronized method to add a depth pair to the pool. */
-    public synchronized boolean put(URLDepthPair depthPair) {
-
-        // A variable to keep track of if the depth pair was added.
-        boolean added = false;
-
-        // If the depth is less than the max depth, add the depth pair to
-        // the pool.
-        if (depthPair.getDepth() < depthPair.getDepth()) {
-            pendingURLs.addLast(depthPair);
-            added = true;
-
-            // Added something, so wake up a consumer.  Decrement number of
-            // waiting threads.
-            waitingThreads--;
-            this.notify();
-        }
-        // If the depth is not less than the max depth, just add the depth pair
-        // to seen list.
-        else {
-            seenURLs.add(depthPair.getURL());
-        }
-        // Return boolean added.
-        return added;
+    public URLPool(int maxDepth) {
+        this.maxDepth = maxDepth;
+        urlsWaitingCheck = new LinkedList<>();
+        urlsSeen = new LinkedList<>();
+        waitCountThread = 0;
+        urlsSeenSet = new HashSet<>();
     }
 
     /**
-     * A synchronized method to get the next depth pair from the pool.
+     * Блок кода помечен ключевым словом synchronized, это значит, что блок может выполняться только одним потоком одновременно.
+     *
+     * @return Получаем следующую пару Url-адресов для обхода
      */
-    public synchronized URLDepthPair get() {
-
-        // Set depth pair to null.
-        URLDepthPair myDepthPair = null;
-
-        // While the pool is empty, wait.
-        if (pendingURLs.size() == 0) {
-            waitingThreads++;
+    public synchronized URLDepthPair getNextPair() {
+        // Приостановить этот поток до тех пор, пока не будет доступна пара
+        while (urlsWaitingCheck.size() == 0) {
             try {
-                this.wait();
-            }
-            catch (InterruptedException e) {
-                System.err.println("MalformedURLException: " + e.getMessage());
-                return null;
+                waitCountThread++;
+                // Освобождает монитор и переводит вызывающий поток в состояние ожидания до тех пор, пока другой поток не вызовет метод notify()
+                wait();
+                waitCountThread--;
+                //Выбрасывается, когда поток находится в ожидании, спящем режиме или иным образом занят, и поток прерывается до или во время действия.
+            } catch (InterruptedException e) {
+                System.out.println("Caught unexpected " +
+                        "InterruptedException, ignoring...");
             }
         }
-        // Remove the first depth pair, add to seen URLs and processed URLs,
-        // and return it.
-        myDepthPair = pendingURLs.removeFirst();
-        seenURLs.add(myDepthPair.getURL());
-        processedURLs.add(myDepthPair);
-        return myDepthPair;
+        return urlsWaitingCheck.removeFirst();
     }
+
     /**
-     * A synchronized method to get the list of seen URLs.
+     * Добавляем пару URL-адресов в пул. Сначала проверяем, видели ли мы этот URL раньше.
+     * Если нет, всегда добавляем его в список просмотренных и добавляем так же
+     * в список ожидающих, если его глубина не слишком велика.
+     *
+     * @param pair URL адресс и глубина.
      */
-    public synchronized ArrayList<String> getSeenList() {
-        return seenURLs;
+    public synchronized void addPair(URLDepthPair pair) {
+        if (urlsSeenSet.contains(pair.getURLString())) {
+            return;
+        }
+        urlsSeen.add(pair);
+        if (pair.getDepth() < maxDepth) {
+            urlsWaitingCheck.add(pair);
+            // продолжает работу потока, у которого ранее был вызван метод wait()
+            notify();
+        }
+        // Закидываем этот URL в уже просмотренный.
+        urlsSeenSet.add(pair.getURLString());
     }
+
+    /**
+     * @return количество ожидающих потоков
+     */
+    public synchronized int getWaitCountThread() {
+        return waitCountThread;
+    }
+
+
+    /**
+     * @return список всех просмотренных URL-адрессов и их глубина
+     */
+    public LinkedList<URLDepthPair> getSeenUrls() {
+        return urlsSeen;
+    }
+
 }

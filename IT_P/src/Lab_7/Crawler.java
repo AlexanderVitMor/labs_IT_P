@@ -1,21 +1,27 @@
 package Lab_7;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Crawler {
     // HTML href tag
     static final String HREF_TAG = "<a href=\"http";
     // List of all sites seen so far.
     static LinkedList<URLDepthPair> allSitesSeen =
-            new LinkedList<>();
+            new LinkedList<URLDepthPair>();
     // List of sites not yet processed
-    static LinkedList<URLDepthPair> toVisit = new LinkedList<>();
+    static LinkedList<URLDepthPair> toVisit = new LinkedList<URLDepthPair>();
 
     /**
-     * Эта функция сканирует веб, начиная с заданного источника и
-     * исследуя на глубину maxDepth.
+     * This function crawls the web, starting at the given source and
+     * exploring to a depth of maxDepth.
      * @param startURL - starting URL
      * @param maxDepth - maximum crawl depth
      * @throws MalformedURLException - if a URL is malformed
@@ -56,7 +62,7 @@ public class Crawler {
                 String line;
                 int lineLength;
                 int shiftIdx;
-                while (null != (line = in.readLine())) {
+                while ((line = in.readLine()) != null) {
                     // Check if the current line has a link
                     boolean foundFullLink = false;
                     int idx = line.indexOf(HREF_TAG);
@@ -108,12 +114,12 @@ public class Crawler {
      * @throws MalformedURLException
      */
     public static void main(String[] args) throws MalformedURLException {
-//        if (args.length != 2) {
-//            System.out.println("usage: java Crawler <URL> <maximum_depth>");
-//            return;
-//        }
-        String startURL = "https://slashdot.org/";
-        int maxDepth = 2;
+        if (args.length != 2) {
+            System.out.println("usage: java Crawler <URL> <maximum_depth>");
+            return;
+        }
+        String startURL = args[0];
+        int maxDepth = Integer.parseInt(args[1]);
         crawl(startURL, maxDepth);
     }
 }

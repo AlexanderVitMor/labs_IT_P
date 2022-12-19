@@ -1,6 +1,7 @@
 package Lab_7;
 
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class URLDepthPair {
     // URL for this pair

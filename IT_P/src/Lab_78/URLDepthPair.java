@@ -2,73 +2,46 @@ package Lab_78;
 
 import java.net.*;
 
-/**
- * A class to represent [URL, depth] pairs for our Crawler.
- */
 public class URLDepthPair {
-
-
-    /**
-     * Fields to represent the current URL and current depth.
-     */
-
-    private String currentURL;
-    private int currentDepth;
-
+    // URL-адрес для этой пары
+    URL url;
+    // Глубина поиска для этой пары
+    int depth;
 
     /**
-     * A constructor that sets the input to the current URL and depth.
+     * @param url   RL-адрес для этой пары
+     * @param depth Глубина поиска для этой пары
+     * @throws MalformedURLException Выбрасывается, чтобы указать, что произошел искаженный URL-адрес.
+     *                               Либо в строке спецификации не может быть найден юридический протокол, либо строка не может быть проанализирована.
      */
-    public URLDepthPair(String URL, int depth) {
-        currentDepth = depth;
-        currentURL = URL;
+    public URLDepthPair(String url, int depth) throws MalformedURLException {
+        this.url = new URL(url);
+        this.depth = depth;
     }
-    /**
-     * A method which returns the current URL.
-     */
-    public String getURL() {
-        return currentURL;
-    }
-    /**
-     * A method which returns the current depth.
-     */
-    public int getDepth() {
-        return currentDepth;
-    }
-    /**
-     * A method which returns the current URL and current depth in string
-     * format.
-     */
+
+    // Вывод строки URL и глубина
     public String toString() {
-        String stringDepth = Integer.toString(currentDepth);
-        return stringDepth + '\t' + currentURL;
-    }
-    /**
-     * A method which returns the docPath of the current URL.
-     */
-    public String getDocPath() {
-        try {
-            URL url = new URL(currentURL);
-            return url.getPath();
-        }
-        catch (MalformedURLException e) {
-            System.err.println("MalformedURLException: " + e.getMessage());
-            return null;
-        }
-    }
-    /**
-     * A method which returns the webHost of the current URL.
-     */
-    public String getWebHost() {
-        try {
-            URL url = new URL(currentURL);
-            return url.getHost();
-        }
-        catch (MalformedURLException e) {
-            System.err.println("MalformedURLException: " + e.getMessage());
-            return null;
-        }
+        return url + "\t" + depth;
     }
 
+    // Возвращает имя хоста для пары.
+    public String getHost() {
+        return url.getHost();
+    }
+
+    // Возвращает путь для пары.
+    public String getPath() {
+        return url.getPath();
+    }
+
+    // Возвращает глубину поиска пары.
+    public int getDepth() {
+        return depth;
+    }
+
+    // Возвращает строку URL пары.
+    public String getURLString() {
+        return url.toString();
+    }
 
 }
