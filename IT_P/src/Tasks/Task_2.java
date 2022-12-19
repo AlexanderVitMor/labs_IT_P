@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class Task_2 {
     public static void main(String[] args){
-        System.out.println(repeat("hello", 3));
-        System.out.println(differenceMaxMin(new int[]{10, 4, 1, 4, -10, -50, 32, 21}));
+        System.out.println(repeat("hello", 5));
+        System.out.println(differenceMaxMin(new int[]{44, 32, 86, 19}));
         System.out.println(isAvgWhole(new int[]{1, 3}));
         System.out.println(Arrays.toString(cumulativeSum(new int[]{3, 3, -2, 408, 3, 3})));
         System.out.println(getDecimalPlaces("43.20"));
@@ -34,7 +34,9 @@ public class Task_2 {
             max = Math.max(max, j);
             min = Math.min(min, j);
         }
-        return Math.abs(max) + Math.abs(min);
+        if (min < 0 && max > 0)  return Math.abs(max) + Math.abs(min);
+        else return Math.abs(Math.abs(max) - Math.abs(min));
+
     }
 
     public static boolean isAvgWhole(int[] array){
@@ -80,7 +82,7 @@ public class Task_2 {
     public static boolean isValid(String index){
         if (index.length() <= 5){
             for (int i = 0; i < index.length(); i++) {
-                if (Character.isLetter(index.charAt(i)) || index.charAt(i) == ' ') return false;
+                if (!Character.isDigit(index.charAt(i))) return false;
             }
             return true;
         }
@@ -88,13 +90,14 @@ public class Task_2 {
     }
 
     public static boolean isStrangePair(String firstWord, String secondWord){
-        return (firstWord.length() == 0  && secondWord.length() == 0) || (firstWord.charAt(0) == secondWord.charAt(secondWord.length() - 1) &&
-               firstWord.charAt(firstWord.length() - 1) == secondWord.charAt(0));
+        if ((firstWord.length() == 0 && secondWord.length() == 0 ) || (firstWord.length() > 0 && secondWord.length() > 0 ))
+        return firstWord.length() == 0 || firstWord.charAt(0) == secondWord.charAt(secondWord.length() - 1) && firstWord.charAt(firstWord.length() - 1) == secondWord.charAt(0);
+        else return false;
     }
 
-    public static boolean isPrefix(String word, String _prefix){
-        StringBuilder prefix = new StringBuilder(_prefix);
-        prefix.deleteCharAt(_prefix.length() - 1);
+    public static boolean isPrefix(String word, String prefix_){
+        StringBuilder prefix = new StringBuilder(prefix_);
+        prefix.deleteCharAt(prefix_.length() - 1);
         String Prefix = prefix.toString();
         return word.startsWith(Prefix);
     }

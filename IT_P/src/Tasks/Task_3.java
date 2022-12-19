@@ -6,7 +6,7 @@ import java.util.*;
 public class Task_3 {
     public static void main(String[] args) {
         System.out.println(solutions(1, 0, -1));
-        System.out.println(findZip("all zip files are zipped"));
+        System.out.println(findZip("all zip files are Zipped"));
         System.out.println(checkPerfect(97));
         System.out.println(flipEndChars("Cat, dog, and mouse."));
         System.out.println(isValidHexCode("#CD5C5C"));
@@ -14,7 +14,7 @@ public class Task_3 {
         System.out.println(isKaprekar(10));
         System.out.println(longestZero("1111101100"));
         System.out.println(nextPrime(90));
-        System.out.println(rightTriangle(70,130,110));
+        System.out.println(rightTriangle(70, 130, 110));
 
     }
 
@@ -41,8 +41,8 @@ public class Task_3 {
 
     public static String flipEndChars(String message) {
         int lastIndex = message.length() - 1;
-        char lastChar = message.charAt(lastIndex);
         char firstChar = message.charAt(0);
+        char lastChar = message.charAt(lastIndex);
 
         if (lastIndex == firstChar) return "Two's a pair.";
         else if (message.length() == 2) return "Incompatible.";
